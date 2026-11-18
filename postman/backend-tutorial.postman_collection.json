@@ -1,0 +1,120 @@
+{
+  "info": {
+    "name": "Backend Tutorial API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "postId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Register User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"demo-user\",\n  \"email\": \"demo@example.com\",\n  \"password\": \"secret123\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/users/register"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('User is registered or already exists', function () {",
+              "    pm.expect([201, 409]).to.include(pm.response.code);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login User",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"demo@example.com\",\n  \"password\": \"secret123\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/users/login"
+      }
+    },
+    {
+      "name": "Create Post",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Garv\",\n  \"description\": \"Backend tutorial post\",\n  \"age\": 20\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/posts/create"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Post created successfully', function () {",
+              "    pm.response.to.have.status(201);",
+              "    const body = pm.response.json();",
+              "    pm.collectionVariables.set('postId', body.post._id);",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Posts",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/posts"
+      }
+    },
+    {
+      "name": "Get Post By ID",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/api/v1/posts/{{postId}}"
+      }
+    },
+    {
+      "name": "Update Post",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"description\": \"Updated tutorial post\"\n}"
+        },
+        "url": "{{baseUrl}}/api/v1/posts/{{postId}}"
+      }
+    },
+    {
+      "name": "Delete Post",
+      "request": {
+        "method": "DELETE",
+        "url": "{{baseUrl}}/api/v1/posts/{{postId}}"
+      }
+    }
+  ]
+}

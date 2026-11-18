@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/posts/create"
+method: POST
+headers:
+  Content-Type: application/json
+body:
+  type: text
+  content: |-
+    {
+      "name": "Garv",
+      "description": "Backend tutorial post",
+      "age": 20
+    }
+order: 4000

@@ -1,0 +1,14 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/posts/:id"
+method: PATCH
+headers:
+  Content-Type: application/json
+pathVariables:
+  id: ""
+body:
+  type: text
+  content: |-
+    {
+      "description": "Updated tutorial post"
+    }
+order: 7000

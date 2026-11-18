@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{baseUrl}}/api/v1/posts/:id"
+method: GET
+pathVariables:
+  id: ""
+order: 6000
